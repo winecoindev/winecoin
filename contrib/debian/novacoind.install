@@ -1,0 +1,2 @@
+debian/bin/WineCoind usr/bin
+src/WineCoind usr/lib/WineCoin

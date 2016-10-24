@@ -1,0 +1,9 @@
+Building WineCoin
+
+See doc/readme-qt.rst for instructions on building WineCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of WineCoin.
+
+See doc/build-*.txt for instructions on building WineCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of WineCoin.

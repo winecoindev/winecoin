@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: WineCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# WineCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable WineCoin service.
+# WineCoin_config (path): Set to /usr/local/etc/WineCoin.conf by default.
+# WineCoin_user:  The user account WineCoin daemon runs as. It uses 'root' user by default.
+# WineCoin_group: The group account WineCoin daemon runs as. It uses 'wheel' group by default.
+# WineCoin_datadir (str): Default to "/var/db/WineCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=WineCoin
+rcvar=WineCoin_enable
+
+: ${WineCoin_enable:=NO}
+: ${WineCoin_config=/usr/local/etc/WineCoin.conf}
+: ${WineCoin_datadir=/var/db/WineCoin}
+: ${WineCoin_user="root"}
+: ${WineCoin_group="wheel"}
+
+required_files=${WineCoin_config}
+command=/usr/local/bin/WineCoind
+WineCoin_chdir=${WineCoin_datadir}
+pidfile="${WineCoin_datadir}/WineCoind.pid"
+stop_cmd=WineCoin_stop
+command_args="-conf=${WineCoin_config} -datadir=${WineCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+WineCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${WineCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${WineCoin_user}:${WineCoin_group} ${WineCoin_datadir}
+}
+
+WineCoin_prestart()
+{
+	if [ ! -d "${WineCoin_datadir}/." ]; then
+		WineCoin_create_datadir || return 1
+	fi
+}
+
+WineCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+WineCoin_stop()
+{
+    WineCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${WineCoin_config} -datadir=${WineCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

@@ -1,0 +1,11 @@
+[Unit]
+Description=WineCoin daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=WineCoin
+ExecStart=/opt/WineCoin/WineCoind
+
+[Install]
+WantedBy=multi-user.target

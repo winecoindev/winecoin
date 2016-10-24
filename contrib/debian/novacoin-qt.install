@@ -1,0 +1,5 @@
+WineCoin-qt usr/bin
+share/pixmaps/WineCoin32.xpm usr/share/pixmaps
+share/pixmaps/WineCoin80.xpm usr/share/pixmaps
+debian/WineCoin-qt.desktop usr/share/applications
+debian/WineCoin-qt.protocol usr/share/kde4/services/

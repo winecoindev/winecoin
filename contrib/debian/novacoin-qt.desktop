@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=WineCoin
+Comment=WineCoin P2P Cryptocurrency
+Comment[ru]=WineCoin, P2P криптовалюта
+Comment[fr]=WineCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=WineCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/WineCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/WineCoin80.xpm
+MimeType=x-scheme-handler/WineCoin;
+Categories=Office;
